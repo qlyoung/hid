@@ -1,0 +1,8 @@
+LIBRARY hid
+EXPORTS
+	HidD_GetAttributes=HidD_GetAttributes @3
+	HidD_GetManufacturerString @9
+	HidD_GetSerialNumberString @15
+	HidD_GetProductString @14
+	HidD_GetHidGuid @6
+	HidD_SetFeature @18
