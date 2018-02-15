@@ -21,11 +21,17 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\MinHook.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hid.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="deviceioctl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -38,13 +44,18 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="deviceioctl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="hid.def">
       <Filter>Source Files</Filter>
     </None>
     <None Include="lib\MinHook.x64.exp" />
-    <None Include="lib\MinHook.x64.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\MinHook.x64.lib" />

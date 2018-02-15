@@ -146,15 +146,19 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>hid.def</ModuleDefinitionFile>
+      <AdditionalDependencies>lib\MinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="common.h" />
+    <ClInclude Include="deviceioctl.h" />
+    <ClInclude Include="hid.h" />
     <ClInclude Include="include\MinHook.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="deviceioctl.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="hid.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -163,10 +167,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="hid.def" />
-    <None Include="lib\MinHook.x64.dll" />
     <None Include="lib\MinHook.x64.exp" />
   </ItemGroup>
   <ItemGroup>
