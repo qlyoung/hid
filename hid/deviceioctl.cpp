@@ -1,3 +1,9 @@
+#if defined _M_X64
+#pragma comment(lib, "libMinHook.x64.lib")
+#elif defined _M_IX86
+#pragma comment(lib, "libMinHook.x86.lib")
+#endif
+
 #include "stdafx.h"
 
 #include "deviceioctl.h"

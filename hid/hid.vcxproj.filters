@@ -55,9 +55,8 @@
     <None Include="hid.def">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="lib\MinHook.x64.exp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="lib\MinHook.x64.lib" />
+    <Library Include="lib\libMinHook.x64.lib" />
   </ItemGroup>
 </Project>

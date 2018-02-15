@@ -146,7 +146,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>hid.def</ModuleDefinitionFile>
-      <AdditionalDependencies>lib\MinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -171,10 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="hid.def" />
-    <None Include="lib\MinHook.x64.exp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="lib\MinHook.x64.lib" />
+    <Library Include="lib\libMinHook.x64.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
