@@ -24,6 +24,9 @@
     <ClInclude Include="common.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\MinHook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -40,6 +43,10 @@
     <None Include="hid.def">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="packages.config" />
+    <None Include="lib\MinHook.x64.exp" />
+    <None Include="lib\MinHook.x64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\MinHook.x64.lib" />
   </ItemGroup>
 </Project>

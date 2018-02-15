@@ -1,8 +1,11 @@
 #pragma once
 
 #define logfilename "hid.log"
+#define hiddllpath "C:\\Windows\\System32\\hid.dll"
 
-void mLog(const char *message);
+void mLog(const char *format, ...);
+void mwLog(const wchar_t *format, ...);
+
 extern HMODULE hid;
 
 /*
