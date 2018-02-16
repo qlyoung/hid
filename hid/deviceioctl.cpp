@@ -50,7 +50,7 @@ BOOL WINAPI hook_DeviceIoControl(
 							   lpOverlapped);
 	mlog("obuf[%d]:", nOutBufferSize);
 	hexdump(lpOutBuffer, nOutBufferSize);
-	mlog("\n=================");
+	mlog("=================");
 	return ret;
 }
 
