@@ -39,8 +39,18 @@ BOOL WINAPI hook_DeviceIoControl(
 
 	/* ... emulate ioctl comms here ... */
 
-	ret = orig_DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer, nInBufferSize, lpOutBuffer, nOutBufferSize, lpBytesReturned, lpOverlapped);
-	mlog("[+] %s: %s", __func__, (ret ? "succeeded" : "failed"));
+	mlog("===== IOCTL =====");
+	mlog("ctlcode: %d", dwIoControlCode);
+	mlog("overlapped: %p", lpOverlapped);
+	mlog("inbuf[%d]:", nInBufferSize);
+	hexdump(lpInBuffer, nInBufferSize);
+	ret = orig_DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer,
+							   nInBufferSize, lpOutBuffer,
+							   nOutBufferSize, lpBytesReturned,
+							   lpOverlapped);
+	mlog("obuf[%d]:", nOutBufferSize);
+	hexdump(lpOutBuffer, nOutBufferSize);
+	mlog("\n=================");
 	return ret;
 }
 
