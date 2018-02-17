@@ -36,21 +36,40 @@ BOOL WINAPI hook_DeviceIoControl(
 )
 {
 	BOOL ret;
+	static HANDLE sensor;
 
-	/* ... emulate ioctl comms here ... */
+	if (!sensor && dwIoControlCode == SENSOR_IOCTL_UNKNOWN) {
+		mlog("[!] Saw probable sensor IOCTL, saving handle");
+		sensor = hDevice;
+	}
+	
+	if (sensor && hDevice == sensor) {
+		DebugBreak();
+		mlog("===== IOCTL =====");
+		mlog("ctlcode: %d", dwIoControlCode);
+		mlog("overlapped: %p", lpOverlapped);
+		mlog("inbuf[%d]:", nInBufferSize);
+		hexdump(lpInBuffer, nInBufferSize);
+		ret = orig_DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer,
+			nInBufferSize, lpOutBuffer,
+			nOutBufferSize, lpBytesReturned,
+			lpOverlapped);
+		mlog("bytes returned: %d%s", (lpBytesReturned ? *lpBytesReturned : 0),
+			lpBytesReturned ? "" : " (dumping whole buffer)");
+		mlog("obuf[%d]:", nOutBufferSize);
+		if (!lpOutBuffer)
+			mlog(">>> No output buffer...");
+		else
+			hexdump(lpOutBuffer, lpBytesReturned ? *lpBytesReturned : nOutBufferSize);
+		mlog("=================");
+	}
+	else {
+		ret = orig_DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer,
+			nInBufferSize, lpOutBuffer,
+			nOutBufferSize, lpBytesReturned,
+			lpOverlapped);
+	}
 
-	mlog("===== IOCTL =====");
-	mlog("ctlcode: %d", dwIoControlCode);
-	mlog("overlapped: %p", lpOverlapped);
-	mlog("inbuf[%d]:", nInBufferSize);
-	hexdump(lpInBuffer, nInBufferSize);
-	ret = orig_DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer,
-							   nInBufferSize, lpOutBuffer,
-							   nOutBufferSize, lpBytesReturned,
-							   lpOverlapped);
-	mlog("obuf[%d]:", nOutBufferSize);
-	hexdump(lpOutBuffer, nOutBufferSize);
-	mlog("=================");
 	return ret;
 }
 
