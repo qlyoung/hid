@@ -1,50 +1,23 @@
 #include "stdafx.h"
 
 #include "util.h"
-#include <stdio.h>
+#include "plog\Log.h"
+#include <string>
 
-/* global utility lock */
-HANDLE ulock;
-FILE *logfile;
-
-void mwlog(const wchar_t *format, ...)
+std::string hexdump(const void* data, size_t size)
 {
-	WaitForSingleObject(ulock, INFINITE);
-
-	va_list args;
-	va_start(args, format);
-	vfwprintf(logfile, format, args);
-	va_end(args);
-	fwrite("\n", 1, 1, logfile);
-	fflush(logfile);
-
-	ReleaseMutex(ulock);
-
-}
-
-void mlog(const char *format, ...)
-{
-	WaitForSingleObject(ulock, INFINITE);
-
-	va_list args;
-	va_start(args, format);
-	vfprintf(logfile, format, args);
-	va_end(args);
-	fwrite("\n", 1, 1, logfile);
-	fflush(logfile);
-
-	ReleaseMutex(ulock);
-}
-
-void hexdump(const void* data, size_t size)
-{
-	WaitForSingleObject(ulock, INFINITE);
-
+	std::string dump;
 	char ascii[17];
 	size_t i, j;
+	char hexchar[4];
+
 	ascii[16] = '\0';
+
 	for (i = 0; i < size; ++i) {
-		fprintf(logfile, "%02X ", ((unsigned char*)data)[i]);
+
+		snprintf(hexchar, sizeof(hexchar), "%02X ", ((unsigned char *)data)[i]);
+		dump.append(hexchar);
+
 		if (((unsigned char*)data)[i] >= ' ' && ((unsigned char*)data)[i] <= '~') {
 			ascii[i % 16] = ((unsigned char*)data)[i];
 		}
@@ -52,40 +25,36 @@ void hexdump(const void* data, size_t size)
 			ascii[i % 16] = '.';
 		}
 		if ((i + 1) % 8 == 0 || i + 1 == size) {
-			fprintf(logfile, " ");
+			dump.append(" ");
 			if ((i + 1) % 16 == 0) {
-				fprintf(logfile, "|  %s \n", ascii);
+				dump.append("|  ");
+				dump.append(ascii);
+				dump.append(" \n");
 			}
 			else if (i + 1 == size) {
 				ascii[(i + 1) % 16] = '\0';
 				if ((i + 1) % 16 <= 8) {
-					fprintf(logfile, " ");
+					dump.append(" ");
 				}
 				for (j = (i + 1) % 16; j < 16; ++j) {
-					fprintf(logfile, "   ");
+					dump.append("   ");
 				}
-				fprintf(logfile, "|  %s \n", ascii);
+				dump.append("|  ");
+				dump.append(ascii);
+				dump.append("\n");
 			}
 		}
 	}
 
-	ReleaseMutex(ulock);
+	return dump;
 }
 
 void util_init()
 {
-	logfile = logfile ? logfile : fopen(logfilename, "w");
-	ulock = CreateMutex(NULL, FALSE, NULL);
+	plog::init(plog::debug, LOGFILENAME);
 }
 
 void util_uninit()
 {
-	if (logfile) {
-		mlog("[!] === Closing log. ===");
-		fflush(logfile);
-		fclose(logfile);
-	}
-
-	logfile = NULL;
-	CloseHandle(ulock);
+	LOGD << "=== Closing log. ===";
 }
