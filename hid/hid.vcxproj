@@ -191,6 +191,7 @@
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="hid.def" />
   </ItemGroup>
   <ItemGroup>

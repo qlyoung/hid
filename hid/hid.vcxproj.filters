@@ -115,6 +115,7 @@
     <None Include="hid.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\libMinHook.x64.lib" />

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Sensor ioctl emulation.
  */
 #pragma once
